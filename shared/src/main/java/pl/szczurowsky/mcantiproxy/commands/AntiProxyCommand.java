@@ -40,6 +40,7 @@ public class AntiProxyCommand {
     @Execute(route = "whitelist", required = 3)
     public String whitelist(@Arg @Name("add|remove") String action, @Arg @Name("ip|player") String target, @Arg @Name("IP") String value) {
         List<String> whitelist = (target.equalsIgnoreCase("ip")) ? config.whitelistedIps : config.whitelistedPlayers;
+        value = value.toLowerCase();
         if (action.equalsIgnoreCase("add")) {
             if (!whitelist.contains(value)) {
                 whitelist.add(value);

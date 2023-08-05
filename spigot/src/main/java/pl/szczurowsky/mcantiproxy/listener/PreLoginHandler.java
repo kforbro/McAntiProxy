@@ -30,7 +30,7 @@ public class PreLoginHandler implements Listener {
         String token = config.token;
         String ip = event.getAddress().getHostAddress();
         if (config.whitelistedIps.contains(ip)) return;
-        if (config.whitelistedPlayers.contains(event.getName())) return;
+        if (config.whitelistedPlayers.contains(event.getName().toLowerCase())) return;
         if (cacheManager.isCached(ip)) {
             event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, ColorUtil.format(messagesConfig.kickMessage.replace("{ip}", ip).replace("{username}", event.getName())));
             return;

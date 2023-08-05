@@ -34,7 +34,7 @@ public class PreLoginHandler {
             String ip = event.getPlayer().getRemoteAddress().getAddress().getHostAddress();
             if (config.whitelistedIps.contains(ip)) return;
             System.out.println("22222222222222");
-            if (config.whitelistedPlayers.contains(event.getPlayer().getUsername())) return;
+            if (config.whitelistedPlayers.contains(event.getPlayer().getUsername().toLowerCase())) return;
             System.out.println("33333333333333");
             if (cacheManager.isCached(ip)) {
                 System.out.println("444444444444444444");
