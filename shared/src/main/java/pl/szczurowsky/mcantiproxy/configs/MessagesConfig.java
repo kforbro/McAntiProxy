@@ -40,5 +40,6 @@ public class MessagesConfig extends OkaeriConfig {
     public String kickMessage = "&cConnection blocked\n"
             + "&7We detected VPN/Proxy connection.\n"
             + "&7Please contact an admin.\n"
+            + "&7 Your username: &c{username}\n"
             + "&7 Your ip: &c{ip}";
 }

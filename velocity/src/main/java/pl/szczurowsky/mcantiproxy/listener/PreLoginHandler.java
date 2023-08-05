@@ -38,7 +38,7 @@ public class PreLoginHandler {
             System.out.println("33333333333333");
             if (cacheManager.isCached(ip)) {
                 System.out.println("444444444444444444");
-                event.getPlayer().disconnect(LegacyComponentSerializer.legacyAmpersand().deserialize(messagesConfig.kickMessage.replace("{ip}", ip)));
+                event.getPlayer().disconnect(LegacyComponentSerializer.legacyAmpersand().deserialize(messagesConfig.kickMessage.replace("{ip}", ip).replace("{username}", event.getPlayer().getUsername())));
                 return;
             }
             System.out.println("555555555555555555");
@@ -54,7 +54,7 @@ public class PreLoginHandler {
                 System.out.println("77777777777777777");
                 if (data.getString("proxy").equals("yes")) {
 
-                    event.getPlayer().disconnect(LegacyComponentSerializer.legacyAmpersand().deserialize(messagesConfig.kickMessage.replace("{ip}", ip)));
+                    event.getPlayer().disconnect(LegacyComponentSerializer.legacyAmpersand().deserialize(messagesConfig.kickMessage.replace("{ip}", ip).replace("{username}", event.getPlayer().getUsername())));
                     cacheManager.addToCache(ip, true);
                     return;
                 }
