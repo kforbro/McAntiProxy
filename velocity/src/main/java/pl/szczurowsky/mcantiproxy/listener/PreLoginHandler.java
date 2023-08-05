@@ -30,6 +30,7 @@ public class PreLoginHandler {
         return EventTask.async(() -> {
             String token = config.token;
             String ip = event.getConnection().getRemoteAddress().getAddress().getHostAddress();
+            if (config.whitelistedIps.contains(ip)) return;
             if (cacheManager.isCached(ip)) {
                 event.setResult(PreLoginEvent.PreLoginComponentResult.denied(LegacyComponentSerializer.legacyAmpersand().deserialize(messagesConfig.kickMessage.replace("{ip}", ip))));
                 return;
@@ -42,7 +43,7 @@ public class PreLoginHandler {
                 JSONObject data = response.getJSONObject(ip);
                 if (!data.has("proxy"))
                     return;
-                if (data.getString("proxy").equals("yes") && !config.whitelistedIps.contains(ip)) {
+                if (data.getString("proxy").equals("yes")) {
                     event.setResult(PreLoginEvent.PreLoginComponentResult.denied(LegacyComponentSerializer.legacyAmpersand().deserialize(messagesConfig.kickMessage.replace("{ip}", ip))));
                     cacheManager.addToCache(ip, true);
                     return;
