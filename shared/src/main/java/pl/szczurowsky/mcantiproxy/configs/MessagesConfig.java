@@ -24,6 +24,12 @@ public class MessagesConfig extends OkaeriConfig {
     @Comment("Message when config's reload failed")
     public String reloadFailureMessage = "&8[ &4&l✖&8 ] &cConfigs reload failed";
 
+    @Comment("Message when target is added to the whitelist")
+    public String addWhitelistMessage = "&8[ &a&l✔&8 ] &aThe target has been added to the whitelist";
+
+    @Comment("Message when target is removed to the whitelist")
+    public String removeWhitelistMessage = "&8[ &a&l✔&8 ] &aThe target has been removed from the whitelist";
+
     @Comment("Help menu")
     public List<String> helpMessage = Arrays.asList(
             "&7●●●●●●● &6&lAntiProxy &7●●●●●●●",
