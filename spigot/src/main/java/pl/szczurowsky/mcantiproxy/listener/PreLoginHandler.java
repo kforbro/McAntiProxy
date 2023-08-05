@@ -32,7 +32,9 @@ public class PreLoginHandler implements Listener {
         if (config.whitelistedIps.contains(ip)) return;
         if (config.whitelistedPlayers.contains(event.getName().toLowerCase())) return;
         if (cacheManager.isCached(ip)) {
-            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, ColorUtil.format(messagesConfig.kickMessage.replace("{ip}", ip).replace("{username}", event.getName())));
+            if (cacheManager.isProxy(ip)) {
+                event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, ColorUtil.format(messagesConfig.kickMessage.replace("{ip}", ip).replace("{username}", event.getName())));
+            }
             return;
         }
         try {

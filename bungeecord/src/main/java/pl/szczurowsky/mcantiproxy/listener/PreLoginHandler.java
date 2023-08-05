@@ -33,8 +33,10 @@ public class PreLoginHandler implements Listener {
         if (config.whitelistedIps.contains(ip)) return;
         if (config.whitelistedPlayers.contains(event.getConnection().getName().toLowerCase())) return;
         if (cacheManager.isCached(ip)) {
-            event.setCancelled(true);
-            event.setCancelReason(TextComponent.fromLegacyText(ColorUtil.format(messagesConfig.kickMessage.replace("{ip}", ip).replace("{username}", event.getConnection().getName()))));
+            if (cacheManager.isProxy(ip)) {
+                event.setCancelled(true);
+                event.setCancelReason(TextComponent.fromLegacyText(ColorUtil.format(messagesConfig.kickMessage.replace("{ip}", ip).replace("{username}", event.getConnection().getName()))));
+            }
             return;
         }
         try {

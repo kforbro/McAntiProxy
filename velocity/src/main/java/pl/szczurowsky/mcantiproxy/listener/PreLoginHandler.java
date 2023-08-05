@@ -34,7 +34,9 @@ public class PreLoginHandler {
             if (config.whitelistedIps.contains(ip)) return;
             if (config.whitelistedPlayers.contains(event.getPlayer().getUsername().toLowerCase())) return;
             if (cacheManager.isCached(ip)) {
-                event.getPlayer().disconnect(LegacyComponentSerializer.legacyAmpersand().deserialize(messagesConfig.kickMessage.replace("{ip}", ip).replace("{username}", event.getPlayer().getUsername())));
+                if (cacheManager.isProxy(ip)) {
+                    event.getPlayer().disconnect(LegacyComponentSerializer.legacyAmpersand().deserialize(messagesConfig.kickMessage.replace("{ip}", ip).replace("{username}", event.getPlayer().getUsername())));
+                }
                 return;
             }
             try {
@@ -46,7 +48,6 @@ public class PreLoginHandler {
                 if (!data.has("proxy"))
                     return;
                 if (data.getString("proxy").equals("yes")) {
-
                     event.getPlayer().disconnect(LegacyComponentSerializer.legacyAmpersand().deserialize(messagesConfig.kickMessage.replace("{ip}", ip).replace("{username}", event.getPlayer().getUsername())));
                     cacheManager.addToCache(ip, true);
                     return;

@@ -32,10 +32,14 @@ public class CacheManager {
                 cache.remove(ip);
                 return false;
             }
-            if (cacheResult.containsKey(ip)) {
-                return cacheResult.get(ip);
-            }
-            return false;
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isProxy(String ip) {
+        if (cacheResult.containsKey(ip)) {
+            return cacheResult.get(ip);
         }
         return false;
     }
