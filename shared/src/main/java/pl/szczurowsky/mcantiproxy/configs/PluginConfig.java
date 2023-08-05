@@ -18,6 +18,10 @@ public class PluginConfig extends OkaeriConfig {
     @Comment("List of IPs which are allowed to connect to server")
     public List<String> whitelistedIps = Collections.singletonList("127.0.0.1");
 
+    @Variable("PLAYERS-WHITELIST")
+    @Comment("List of players which are allowed to connect to server")
+    public List<String> whitelistedPlayers = Collections.singletonList("Player1");
+
     @Variable("CACHE-EXPRIE")
     @Comment("Cache expiration time")
     public Duration cacheExpirationTime = Duration.ofSeconds(15);

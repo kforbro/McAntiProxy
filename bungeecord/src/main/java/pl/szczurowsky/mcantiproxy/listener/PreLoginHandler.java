@@ -31,6 +31,7 @@ public class PreLoginHandler implements Listener {
         String token = config.token;
         String ip = (event.getConnection().getSocketAddress().toString().split(":")[0]).substring(1);
         if (config.whitelistedIps.contains(ip)) return;
+        if (config.whitelistedPlayers.contains(event.getConnection().getName())) return;
         if (cacheManager.isCached(ip)) {
             event.setCancelled(true);
             event.setCancelReason(TextComponent.fromLegacyText(ColorUtil.format(messagesConfig.kickMessage.replace("{ip}", ip))));

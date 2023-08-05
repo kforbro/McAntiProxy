@@ -31,6 +31,7 @@ public class PreLoginHandler {
             String token = config.token;
             String ip = event.getConnection().getRemoteAddress().getAddress().getHostAddress();
             if (config.whitelistedIps.contains(ip)) return;
+            if (config.whitelistedPlayers.contains(event.getUsername())) return;
             if (cacheManager.isCached(ip)) {
                 event.setResult(PreLoginEvent.PreLoginComponentResult.denied(LegacyComponentSerializer.legacyAmpersand().deserialize(messagesConfig.kickMessage.replace("{ip}", ip))));
                 return;
