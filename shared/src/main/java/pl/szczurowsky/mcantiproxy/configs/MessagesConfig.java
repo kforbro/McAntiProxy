@@ -34,6 +34,7 @@ public class MessagesConfig extends OkaeriConfig {
     public List<String> helpMessage = Arrays.asList(
             "&7●●●●●●● &6&lAntiProxy &7●●●●●●●",
             "&6/ap reload - &7Reload configs",
+            "&6/ap whitelist - &7Manage whitelist",
             "&7●●●●●●● &6&lAntiProxy &7●●●●●●●");
 
     @Comment("Message when blocking player connection")
