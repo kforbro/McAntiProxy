@@ -3,6 +3,7 @@ package pl.szczurowsky.mcantiproxy.listener;
 import com.velocitypowered.api.event.EventTask;
 import com.velocitypowered.api.event.PostOrder;
 import com.velocitypowered.api.event.Subscribe;
+import com.velocitypowered.api.event.connection.PostLoginEvent;
 import com.velocitypowered.api.event.connection.PreLoginEvent;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.json.JSONObject;
@@ -26,18 +27,18 @@ public class PreLoginHandler {
     }
 
     @Subscribe(order = PostOrder.FIRST)
-    public EventTask onPreLogin(PreLoginEvent event) {
+    public EventTask onPostLoginEvent(PostLoginEvent event) {
         return EventTask.async(() -> {
             System.out.println("1111111111111111");
             String token = config.token;
-            String ip = event.getConnection().getRemoteAddress().getAddress().getHostAddress();
+            String ip = event.getPlayer().getRemoteAddress().getAddress().getHostAddress();
             if (config.whitelistedIps.contains(ip)) return;
             System.out.println("22222222222222");
-            if (config.whitelistedPlayers.contains(event.getUsername())) return;
+            if (config.whitelistedPlayers.contains(event.getPlayer().getUsername())) return;
             System.out.println("33333333333333");
             if (cacheManager.isCached(ip)) {
                 System.out.println("444444444444444444");
-                event.setResult(PreLoginEvent.PreLoginComponentResult.denied(LegacyComponentSerializer.legacyAmpersand().deserialize(messagesConfig.kickMessage.replace("{ip}", ip))));
+                event.getPlayer().disconnect(LegacyComponentSerializer.legacyAmpersand().deserialize(messagesConfig.kickMessage.replace("{ip}", ip)));
                 return;
             }
             System.out.println("555555555555555555");
@@ -52,7 +53,8 @@ public class PreLoginHandler {
                     return;
                 System.out.println("77777777777777777");
                 if (data.getString("proxy").equals("yes")) {
-                    event.setResult(PreLoginEvent.PreLoginComponentResult.denied(LegacyComponentSerializer.legacyAmpersand().deserialize(messagesConfig.kickMessage.replace("{ip}", ip))));
+
+                    event.getPlayer().disconnect(LegacyComponentSerializer.legacyAmpersand().deserialize(messagesConfig.kickMessage.replace("{ip}", ip)));
                     cacheManager.addToCache(ip, true);
                     return;
                 }
