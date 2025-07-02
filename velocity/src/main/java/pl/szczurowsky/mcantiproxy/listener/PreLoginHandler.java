@@ -13,6 +13,7 @@ import pl.szczurowsky.mcantiproxy.configs.PluginConfig;
 import pl.szczurowsky.mcantiproxy.util.HttpUtil;
 
 import java.net.HttpURLConnection;
+import java.util.UUID;
 
 public class PreLoginHandler {
 
@@ -31,6 +32,7 @@ public class PreLoginHandler {
         return EventTask.async(() -> {
             String token = config.token;
             String ip = event.getPlayer().getRemoteAddress().getAddress().getHostAddress();
+            if (isFloodgateId(event.getPlayer().getUniqueId())) return;
             if (config.whitelistedIps.contains(ip)) return;
             if (config.whitelistedPlayers.contains(event.getPlayer().getUsername().toLowerCase())) return;
             if (cacheManager.isCached(ip)) {
@@ -57,6 +59,10 @@ public class PreLoginHandler {
                 e.printStackTrace();
             }
         });
+    }
+
+    public boolean isFloodgateId(UUID uuid) {
+        return uuid.getMostSignificantBits() == 0L;
     }
 
 }
