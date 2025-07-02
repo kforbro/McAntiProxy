@@ -1,5 +1,7 @@
 package pl.szczurowsky.mcantiproxy;
 
+import club.minnced.discord.webhook.WebhookClient;
+import club.minnced.discord.webhook.WebhookClientBuilder;
 import com.google.inject.Inject;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
@@ -40,6 +42,7 @@ public class VelocityPlugin {
     private final Logger logger;
     private final Path dataDirectory;
     private final ProxyServer proxyServer;
+    public WebhookClient client;
 
     @Inject
     public VelocityPlugin(Logger logger, @DataDirectory Path dataDirectory, ProxyServer proxyServer) {
@@ -66,6 +69,16 @@ public class VelocityPlugin {
         registerCommands();
         logger.info("Commands registered");
 
+        WebhookClientBuilder builder = new WebhookClientBuilder(config.discordUrl); // or id, token
+        builder.setThreadFactory((job) -> {
+            Thread thread = new Thread(job);
+            thread.setName("McAntiProxyDiscord Thread");
+            thread.setDaemon(true);
+            return thread;
+        });
+        builder.setWait(true);
+        client = builder.build();
+
         logger.info("Successfully enabled plugin in " + ChronoUnit.MILLIS.between(starting, LocalDateTime.now()) + "ms");
     }
 
@@ -75,7 +88,7 @@ public class VelocityPlugin {
     }
 
     private void registerEvents() {
-        this.proxyServer.getEventManager().register(this, new PreLoginHandler(config, messagesConfig, cacheManager));
+        this.proxyServer.getEventManager().register(this, new PreLoginHandler(this, config, messagesConfig, cacheManager));
     }
 
     private void registerConfigs() {

@@ -30,6 +30,15 @@
             <name>Szczurowsky Repository</name>
             <url>https://repo.szczurowsky.pl/snapshots</url>
         </repository>
+        <repository>
+            <id>jitpack</id>
+            <name>Jitpack</name>
+            <url>https://jitpack.io</url>
+        </repository>
+        <repository>
+            <id>opencollab-snapshot</id>
+            <url>https://repo.opencollab.dev/main/</url>
+        </repository>
     </repositories>
 
     <build>

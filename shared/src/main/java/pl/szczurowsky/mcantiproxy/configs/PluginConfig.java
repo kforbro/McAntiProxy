@@ -25,4 +25,8 @@ public class PluginConfig extends OkaeriConfig {
     @Variable("CACHE-EXPRIE")
     @Comment("Cache expiration time")
     public Duration cacheExpirationTime = Duration.ofSeconds(15);
+    @Variable("DISCORD-URL")
+    public String discordUrl = "";
+    @Variable("DISCORD-THREAD-ID")
+    public Long discordThreadId = 1111111111L;
 }
